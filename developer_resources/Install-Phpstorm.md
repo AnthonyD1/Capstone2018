@@ -44,7 +44,7 @@ Go to https://github.com/settings/keys and click new SSH key. Paste the output o
 ## 5. Install PHP Binaries
 We are using PHP 7.0
 ```bash
-sudo apt install php7.0-cli php7.0-cgi
+sudo apt install php7.0-cli php7.0-cgi php7.0-intl
 ```
 
 ## 6. Running the sample program
