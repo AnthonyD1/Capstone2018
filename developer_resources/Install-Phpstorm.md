@@ -3,7 +3,7 @@ This guide details how to install PHPStorm on Ubuntu for use with this project. 
 want to use Windows, you're on your own.
 
 ## 1. Create a JetBrains account
-Visit https://account.jetbrains.com/login and create an account with your Cornell e-mail. Go to the Apply for a
+Visit https://account.jetbrains.com/login and create an account with your student e-mail. Go to the Apply for a
 License page and choose to apply for a student license. You will need to verify your student email again.
 
 ## 2. Download the PHPStorm Application
