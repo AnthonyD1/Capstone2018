@@ -40,3 +40,16 @@ Go to https://github.com/settings/keys and click new SSH key. Paste the output o
 1. On the Welcome screen, select "Check out from Version Control" and choose "Git" (NOT "GitHub")
 2. Paste the repository URL: `git@github.com:AnthonyD1/Capstone2018.git`
 3. You may choose a different local folder to clone the repository to if you wish, but you don't have to.
+
+## 5. Install PHP Binaries
+We are using PHP 7.0
+```bash
+sudo apt install php7.0-cli php7.0-cgi
+```
+
+## 6. Running the sample program
+You should now be set up to see the result of your PHP programs in the browser.
+1. Open the `developer_resources/test_program.php` file.
+2. Move your cursor to the upper right of the editor area. A small toolbar with web browser icons will appear. Click
+your preferred browser.
+3. The page will open in the browser. You should see "Hello, World" in big letters.
