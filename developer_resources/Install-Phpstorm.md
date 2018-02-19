@@ -47,7 +47,7 @@ We are using PHP 7.0
 sudo apt install php7.0-cli php7.0-cgi php7.0-intl php7.0-sqlite3
 ```
 
-## 6. Running the sample program
+## 6. Setting up the PHP interpreter
 You should now be set up to see the result of your PHP programs in the browser.
 1. Open the `developer_resources/test_program.php` file.
 2. Move your cursor to the upper right of the editor area. A small toolbar with web browser icons will appear. Click
