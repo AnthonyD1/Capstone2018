@@ -44,7 +44,7 @@ Go to https://github.com/settings/keys and click new SSH key. Paste the output o
 ## 5. Install PHP Binaries
 We are using PHP 7.0
 ```bash
-sudo apt install php7.0-cli php7.0-cgi php7.0-intl
+sudo apt install php7.0-cli php7.0-cgi php7.0-intl php7.0-sqlite3
 ```
 
 ## 6. Running the sample program
@@ -52,4 +52,12 @@ You should now be set up to see the result of your PHP programs in the browser.
 1. Open the `developer_resources/test_program.php` file.
 2. Move your cursor to the upper right of the editor area. A small toolbar with web browser icons will appear. Click
 your preferred browser.
-3. The page will open in the browser. You should see "Hello, World" in big letters.
+3. The page will open in the browser. If you see "Hello, World" in big letters then you are finished. Otherwise,
+continue to step 4.
+4. Click "Configure PHP interpreter" in the lower right of the PHPStorm window
+5. Set the version to 7
+6. Click ... next to CLI Interpreter
+7. Click the green +
+8. Select "/usr/bin/php"
+9. Close out of the dialogs with "OK"
+10. Reload the page in your web browser to confirm that it is working
