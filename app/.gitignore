@@ -1,5 +1,4 @@
-# CakePHP specific files #
-##########################
+app/tmp/
 
 # OS generated files #
 ######################
