@@ -1,6 +1,7 @@
 <!-- File: src/Template/Articles/index.ctp -->
 
 <h1>Messages</h1>
+<?= $this->Html->link('Write a message', ['action' => 'add']) ?>
 <table>
     <tr>
         <th>Message</th>
@@ -9,13 +10,13 @@
 
     <!-- Here is where we iterate through our $articles query object, printing out article info -->
 
-    <?php foreach ($articles as $article): ?>
+    <?php foreach ($messages as $message): ?>
         <tr>
             <td>
-                <?= $article->body ?>
+                <?= $message->body ?>
             </td>
             <td>
-                <?= $article->created->format(DATE_RFC850) ?>
+                <?= $message->created->format(DATE_RFC850) ?>
             </td>
         </tr>
     <?php endforeach; ?>
