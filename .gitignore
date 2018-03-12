@@ -1,3 +1,7 @@
 .idea
 .idea/*
 composer.lock
+app/tmp
+app/tmp/*
+app/logs
+app/logs/*
