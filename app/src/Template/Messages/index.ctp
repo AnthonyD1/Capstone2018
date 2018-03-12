@@ -1,6 +1,6 @@
 <!-- File: src/Template/Articles/index.ctp -->
 
-<h1>Articles</h1>
+<h1>Messages</h1>
 <table>
     <tr>
         <th>Message</th>

@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
-class Article extends Entity
+class Message extends Entity
 {
     protected $_accessible = [
         '*' => true,
