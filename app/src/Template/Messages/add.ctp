@@ -2,6 +2,6 @@
 <?php
     echo $this->Form->create($message);
     echo $this->Form->control('body');
-    echo $this->Form->button(__('Save Article'));
+    echo $this->Form->button(__('Save Message'));
     echo $this->Form->end();
 ?>

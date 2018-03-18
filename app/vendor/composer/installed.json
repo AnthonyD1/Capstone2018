@@ -1866,8 +1866,8 @@
     },
     {
         "name": "symfony/config",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/config.git",
@@ -1931,8 +1931,8 @@
     },
     {
         "name": "symfony/console",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/console.git",
@@ -2002,8 +2002,8 @@
     },
     {
         "name": "symfony/debug",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/debug.git",
@@ -2060,8 +2060,8 @@
     },
     {
         "name": "symfony/filesystem",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/filesystem.git",
@@ -2111,23 +2111,23 @@
     },
     {
         "name": "symfony/finder",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/finder.git",
-            "reference": "6a615613745cef820d807443f32076bb9f5d0a38"
+            "reference": "a479817ce0a9e4adfd7d39c6407c95d97c254625"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/finder/zipball/6a615613745cef820d807443f32076bb9f5d0a38",
-            "reference": "6a615613745cef820d807443f32076bb9f5d0a38",
+            "url": "https://api.github.com/repos/symfony/finder/zipball/a479817ce0a9e4adfd7d39c6407c95d97c254625",
+            "reference": "a479817ce0a9e4adfd7d39c6407c95d97c254625",
             "shasum": ""
         },
         "require": {
             "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2018-02-11T17:15:12+00:00",
+        "time": "2018-03-05T18:28:11+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2223,8 +2223,8 @@
     },
     {
         "name": "symfony/process",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/process.git",
@@ -2274,8 +2274,8 @@
     },
     {
         "name": "symfony/var-dumper",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/var-dumper.git",
@@ -2345,8 +2345,8 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v3.4.5",
-        "version_normalized": "3.4.5.0",
+        "version": "v3.4.6",
+        "version_normalized": "3.4.6.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
