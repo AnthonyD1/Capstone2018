@@ -10,6 +10,7 @@ class MessagesTable extends Table {
         $this->addBehavior('Timestamp');
     }
 
+    //TODO: Need to make slug generation better
     public function beforeSave($event, $entity, $options) {
         if($entity->isNew() && !$entity->slug) {
             $sluggedBody = Text::slug($entity->body);
