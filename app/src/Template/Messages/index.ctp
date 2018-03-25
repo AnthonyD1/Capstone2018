@@ -1,7 +1,8 @@
 <!-- File: src/Template/Articles/index.ctp -->
 
 <h1>Messages</h1>
-<?= $this->Html->link('Write a message', ['action' => 'add']) ?>
+<!--Removed as the form is now on the same page-->
+<!--<?= $this->Html->link('Write a message', ['action' => 'add']) ?>-->
 <table>
     <tr>
         <th>Message</th>
@@ -21,3 +22,10 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<h2>Add a new message!</h2>
+<?php
+    echo $this->Form->create($newMessage);
+    echo $this->Form->control('body');
+    echo $this->Form->button(__('Save Message'));
+    echo $this->Form->end();
+?>
