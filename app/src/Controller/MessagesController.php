@@ -1,5 +1,5 @@
 <?php
-// src/Controller/ArticlesController.php
+// src/Controller/MessagesController.php
 
 namespace App\Controller;
 
@@ -31,6 +31,22 @@ class MessagesController extends AppController {
         }
 
         //Render the view
+        $this->set('message', $message);
+    }
+
+
+    public function edit($slug)
+    {
+        $message = $this->Messages->findBySlug($slug)->firstOrFail();
+        if ($this->request->is(['post', 'put'])) {
+            $this->Messages->patchEntity($message, $this->request->getData());
+            if ($this->Messages->save($message)) {
+                $this->Flash->success(__('Your message has been updated.'));
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('Unable to update your message.'));
+        }
+
         $this->set('message', $message);
     }
 }
