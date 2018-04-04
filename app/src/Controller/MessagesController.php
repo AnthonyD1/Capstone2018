@@ -29,27 +29,16 @@ class MessagesController extends AppController {
 
         //Render the list of messages
         $messages = $this->Paginator->paginate($this->Messages->find());
+
+        //Send them to the _serialize variable for access via JSON or XML
+        $this->set('messages', $this->Messages->find());
+        $this->set('_serialize', 'messages');
+
+        //Render as HTML
         $this->set(compact('messages'));
 
         //Render form for inserting new messages
         $this->set(compact('newMessage'));
-    }
-
-    public function messagesJson() {
-        //variable in case the user makes a new message
-        $newMessage = $this->Messages->newEntity();
-
-        $this->autoRender = false;
-        $this->request->allowMethod('ajax');
-
-        $data = array(
-            'content' => $newMessage,
-            'error' => null
-        );
-
-        $this->set(compact($data));
-        $this->set('_serialize', 'data');
-
     }
 
     public function add() {
