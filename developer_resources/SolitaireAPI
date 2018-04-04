@@ -1,0 +1,21 @@
+This API explains the possible function called that will be made on the players behalf when they are playing Solitaire.
+
+
+
+Public void shuffleDeck()....................................shuffles the deck of 52 cards.
+
+Public void initializePiles()...............................fill the Piles with appropriate cards from the Deck.
+
+Public void deckToPile(int $pile).........................move current visible card from the deck to one of the piles.
+
+Public void deckToWinPile(int $pile).....................move current visible card from the Deck to the WinPile.
+
+Public void pileToPile(int $startIndex, int $endIndex, int $from_pile, $to_pile)...........move card/cards at the given interval at one pile to another specified pile.
+
+Public void pileToWinPile(int $pile, int $from_pile, int $win_pile).....moves top card from indicated pile to the indicated win pile.
+
+Public void winPileToPile(int $win_pile, int $pile)..........moves the top card from the specified win pile to the the top of the indicated pile.
+
+Public void displayNextCardInDeck()........will show the next card in the Deck.
+
+Public boolean validMove(Cards[] cards, int $from, int $to).....will check if a move of cards is legal or not.
