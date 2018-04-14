@@ -28,7 +28,9 @@ class MessagesController extends AppController {
         }
 
         //Render the list of messages
-        $messages = $this->Paginator->paginate($this->Messages->find());
+        //$messages = $this->Paginator->paginate($this->Messages->find());
+        //Don't need to use paginate here because we want them all displayed on one page
+        $messages = $this->Messages->find();
 
         //Send them to the _serialize variable for access via JSON or XML
         $this->set('messages', $this->Messages->find());
