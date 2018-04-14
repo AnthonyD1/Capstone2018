@@ -19,6 +19,9 @@
             <td>
                 <?= $message->created->format(DATE_RFC850) ?>
             </td>
+            <td>
+                <?= $this->Html->link('Edit', ['action' => 'edit', $message->slug]) ?>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
