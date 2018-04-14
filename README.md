@@ -18,3 +18,8 @@ Create a server-side Solitaire game that users can go to a website and play.
  - Make use of a Framework
  - Use development concepts such as pair programming
 
+## Components
+Third party components that we have utilized for this project:
+ - [CakePHP 3.5](https://cakephp.org/)
+ - [jQuery](https://jquery.com/)
+ - [jquery-dateFormat plugin](https://github.com/phstc/jquery-dateFormat)
