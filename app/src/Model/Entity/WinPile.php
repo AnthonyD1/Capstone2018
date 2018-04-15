@@ -11,9 +11,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 
-class Card extends entity
+class WinPile extends entity
 {
     protected $_accessible = [
-        '*' => false,
+        '*' => false
     ];
 }
