@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 
 \usepackage[margin=0.5in]{geometry}
+\pagenumbering{gobble}
 
 \title{Block 8 Project Information \& Update}
 \author{Anthony Delgado, Salem Ozaki, Joe Tortorello, and Jason Wang}
@@ -21,10 +22,13 @@ We are designing a web service to support a game of solitaire. This is not a pro
 
 \section*{Why a server-side application?}
 Why would the front-end developer rely on our server-side application and not just make the entire game in the front-end code? There are two main reasons:
+\vspace{-3mm}
 \begin{itemize}
 	\item The user cannot modify the game logic or cheat when it is implemented on the server. This creates opportunities for having things like a universal high-score list that cannot be tampered with.
+	\vspace{-3mm}
 	\item Portability: the user can start the game on one device and continue it on another. This can even be across platforms (e.g. starting a game on a mobile device and continuing it on a desktop web browser).
 \end{itemize}
+\vspace{-3mm}
 
 \section*{Tools}
 We are using the PHP programming language to implement this API. We are using the CakePHP web framework. CakePHP uses conventional naming and a scaffolding system to allow us to develop more rapidly.
@@ -36,8 +40,8 @@ We are using PHPDoc to document our code and API. PHPDoc documentation is writte
 We are all using JetBrains PHPStorm as an IDE, but have intentionally structured the project in such a way where it is not inherently linked to a particular development environment should others want to modify our project, or if our own tastes change.
 
 \section*{Progress}
-So far, most of our work has been dedicated to learning the CakePHP framework, and designing the API in such a way that it can take advantages of the facilities provided by the framework. As part of the learning process, we have developed a simple message-board application that uses a simple JSON API to post and receive messages.
+So far, most of our work has been dedicated to learning the CakePHP framework, and designing the API in such a way that it can take advantages of the facilities provided by the framework. As part of the learning process, we have developed a simple message-board application that uses a simple JSON API to send messages to a server and receive a list of the messages.
 
 \section*{Code}
-The entire code base for the project can be found on GitHub. Particularly of interest may be the aforementioned message board demo. Find the controller code for that component at 
+The entire code base for the project can be found on GitHub. Particularly of interest may be the aforementioned message board demo. Find the controller code for that component at\\https://github.com/AnthonyD1/Capstone2018/blob/master/app/src/Controller/MessagesController.php
 \end{document}
