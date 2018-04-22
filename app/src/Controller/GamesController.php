@@ -35,8 +35,13 @@ class GamesController extends AppController {
         $this->set('game', $game->unique_id);
         $this->set('_serialize', 'game');
 
-        // populate tables
+        //TODO: Populate game_cards table for this game
 
+        //TODO: Populate piles table for this game
+    }
+
+    public function destroyGame() {
+        //TODO: Remove data for this game from all tables
     }
 
 
