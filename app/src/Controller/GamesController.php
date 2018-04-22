@@ -9,6 +9,7 @@ use Cake\ORM\TableRegistry;
 
 class GamesController extends AppController {
     private $game_table;
+    private $game_card_table;
 
     /*
      * Overwrite the construct method in AppController and also run this one.
@@ -18,6 +19,7 @@ class GamesController extends AppController {
         parent::initialize();
 
         $this->game_table = TableRegistry::get('Games');
+        $this->game_card_table = TableRegistry::get('game_cards');
 
         $this->LoadComponent('RequestHandler');
     }
@@ -36,24 +38,40 @@ class GamesController extends AppController {
         $this->set('game', ['game_id' => $game->unique_id]);
         $this->set('_serialize', 'game');
 
-        //TODO: Populate game_cards table for this game
+        //Populate game_cards table for this game
+        $this->generateCards($this->getInternalId($game_id));
 
         //TODO: Populate piles table for this game
+    }
+
+    private function generateCards($id) {
+        $newDeck = array();
+        for($suit = 0; $suit < 4; $suit++) {
+            for($value = 0; $value < 13; $value++) {
+                $newCard = $this->game_card_table->newEntity();
+                $this->game_card_table->patchEntity($newCard, ['game_id' => $id, 'number' => $value, 'suit' => $suit, 'face_down' => true]);
+                array_push($newDeck, $newCard);
+            }
+        }
+
+        shuffle($newDeck);
+
+        foreach($newDeck as $card) {
+            $this->game_card_table->save($card);
+        }
     }
 
     /**
      * @param $unique_id The public-facing unique ID for the game
      * Check if the game exists from its unique id
+     * @return Returns true if the game exists, otherwise false
      */
-    public function checkExistence($unique_id) {
-        $result = (count($this->Games->find('all')->where(['unique_id =' => $unique_id])->toArray()) > 0);
-
-        $this->set('result', ['id' => $unique_id, 'exists' => $result]);
-        $this->set('_serialize', 'result');
+    private function checkExistence($unique_id) {
+        return (count($this->Games->find('all')->where(['unique_id =' => $unique_id])->toArray()) > 0);
     }
 
     private function getInternalId($unique_id) {
-        $this->getEntityFromUniqueId($unique_id)->toArray()['id'];
+        return $this->getEntityFromUniqueId($unique_id)->id;
     }
 
     private function getEntityFromUniqueId($unique_id) {
@@ -61,11 +79,16 @@ class GamesController extends AppController {
     }
 
     public function destroyGame($unique_id) {
-        //TODO: Remove data for this game from all tables
+        //Remove data for this game from game table
         if(!$this->checkExistence($unique_id)) {
             $this->RequestHandler->renderAs($this, 'json');
             throw new MethodNotAllowedException('invalid id 😂');
         }
+
+        //Remove cards for this game from game_cards table
+        //$internal_id = $this->getInternalId($unique_id);
+        //$this->game_card_table->deleteAll(['id' => $internal_id]);
+
 
         $res = $this->Games->delete($this->getEntityFromUniqueId($unique_id));
 

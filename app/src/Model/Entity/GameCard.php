@@ -11,9 +11,10 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 
-class GameCard extends entity
-{
+class GameCard extends entity {
+
     protected $_accessible = [
-        '*' => false
+        '*' => true,
+        'id' => false
     ];
 }
