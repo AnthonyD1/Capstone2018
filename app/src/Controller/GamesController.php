@@ -85,11 +85,6 @@ class GamesController extends AppController {
             throw new MethodNotAllowedException('invalid id 😂');
         }
 
-        //Remove cards for this game from game_cards table
-        //$internal_id = $this->getInternalId($unique_id);
-        //$this->game_card_table->deleteAll(['id' => $internal_id]);
-
-
         $res = $this->Games->delete($this->getEntityFromUniqueId($unique_id));
 
         $this->set('result', ['success' => $res]);
