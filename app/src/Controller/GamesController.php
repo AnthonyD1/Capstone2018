@@ -5,11 +5,14 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
 class GamesController extends AppController {
     private $game_table;
     private $game_card_table;
+    private $pile_card_table;
+    private $main_deck_card_table;
 
     /*
      * Overwrite the construct method in AppController and also run this one.
@@ -20,6 +23,8 @@ class GamesController extends AppController {
 
         $this->game_table = TableRegistry::get('Games');
         $this->game_card_table = TableRegistry::get('game_cards');
+        $this->pile_card_table = TableRegistry::get('pile_cards');
+        $this->main_deck_card_table = TableRegistry::get('main_deck_cards');
 
         $this->LoadComponent('RequestHandler');
     }
@@ -38,10 +43,30 @@ class GamesController extends AppController {
         $this->set('game', ['game_id' => $game->unique_id]);
         $this->set('_serialize', 'game');
 
-        //Populate game_cards table for this game
-        $this->generateCards($this->getInternalId($game_id));
+        $internalId = $this->getInternalId($game_id);
 
-        //TODO: Populate piles table for this game
+        //Populate game_cards table for this game
+        $this->generateCards($internalId);
+
+        //Populate piles
+        $gameCards = $this->game_card_table->find('all')->where(['game_id' => $internalId])->toArray();
+
+        for($i = 0; $i < 7; $i++) {
+            for($j = 0; $j <= $i; $j++) {
+                //$i is the number of the pile that this card is in
+                $newPileCard = $this->pile_card_table->newEntity();
+                $curCardId = array_pop($gameCards)->id;
+                $this->pile_card_table->patchEntity($newPileCard, ['game_id' => $internalId, 'pile_id' => $i, 'card_id' => $curCardId]);
+                $this->pile_card_table->save($newPileCard);
+            }
+        }
+
+        //Populate main_deck_cards
+        foreach($gameCards as $card) {
+            $newMainDeckCard = $this->main_deck_card_table->newEntity();
+            $this->main_deck_card_table->patchEntity($newMainDeckCard, ['game_id' => $internalId, 'card_id' => $card->id]);
+            $this->main_deck_card_table->save($newMainDeckCard);
+        }
     }
 
     private function generateCards($id) {
@@ -62,9 +87,9 @@ class GamesController extends AppController {
     }
 
     /**
-     * @param $unique_id The public-facing unique ID for the game
+     * @param $unique_id string The public-facing unique ID for the game
      * Check if the game exists from its unique id
-     * @return Returns true if the game exists, otherwise false
+     * @return boolean Returns true if the game exists, otherwise false
      */
     private function checkExistence($unique_id) {
         return (count($this->Games->find('all')->where(['unique_id =' => $unique_id])->toArray()) > 0);
