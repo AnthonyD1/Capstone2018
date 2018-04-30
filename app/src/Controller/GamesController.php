@@ -86,6 +86,85 @@ class GamesController extends AppController {
         }
     }
 
+    public function moveToPile($game_id, $card_id, $destination) {
+        /*
+         * Source and destination types:
+         * 0 = deck
+         * 1 = pile
+         * 2 = win pile
+         */
+        function doMove($source_type, $source_id, $destination_type, $destination_id) {
+            if($source_type === $destination_type && $source_type !== 1) {
+                throw new MethodNotAllowedException('Cannot move card to it\'s current location');
+            }
+            if($destination_type === 0) {
+                throw new MethodNotAllowedException('Cannot move card back into main deck');
+            }
+            if($source_type === 2) {
+                throw new MethodNotAllowedException('Cannot remove card from win pile');
+            }
+
+            if($source_type === 0) {
+                //delete from main_deck_cards table
+                if($destination_type === 1) {
+                    //add card to pile_cards table
+                } else {
+                    //update highest_card_id in win_piles table
+                }
+            } else if($source_type === 1) {
+                if($destination_type === 1) {
+                    //update pile_id in pile_cards
+                } else if($destination_type === 2) {
+                    //delete card from pile_cards
+                    //update highest card id in win_piles
+                }
+            }
+        }
+
+        $internalId = $this->getInternalId($game_id);
+        $card = $this->game_card_table->find('all')->where(['game_id' => $internalId, 'card_id' => $card_id])->toArray()[0];
+
+        $all_pile_cards = $this->pile_card_table->find('all')->where(['game_id' => $internalId])->toArray();
+        $all_pile_card_ids = array();
+        foreach($all_pile_cards as $a_card) {
+            array_push($all_pile_card_ids, $a_card->id);
+        }
+
+        $all_main_deck_cards = $this->main_deck_card_table->find('all')->where(['game_id' => $internalId])->toArray();
+        $all_main_deck_card_ids = array();
+        foreach($all_main_deck_cards as $a_card) {
+            array_push($all_main_deck_card_ids, $a_card->id);
+        }
+
+        //IF card is in a pile, make sure it has the lowest ID of all cards in that pile
+        //e.g. if $card is in $pile_cards
+        if(array_search($card->id, $all_pile_card_ids)) {
+            //Find the pile ID of the relevant card
+            $my_card_pile_id = $this->pile_card_table->find('all')->where(['game_id' => $internalId, 'card_id' => $card_id])->toArray()[0]->pile_id;
+
+            //Get all the cards in the pile of the card of interest
+            $single_pile_cards = $this->pile_card_table->find('all')->where(['game_id' => $internalId, 'pile_id' => $my_card_pile_id])->toArray();
+
+            //Check if the card is on the top of the pile (card with the lowest ID is always on top). If it is not, disallow the move.
+            foreach($single_pile_cards as $single_pile_card) {
+                if($single_pile_card->id < $card->id) throw new MethodNotAllowedException('Card is not visible.');
+                die();
+            }
+
+            //Move the card
+        } else if(array_search($card->id, $all_main_deck_card_ids)) {
+            //Move the card
+        } else {
+            throw new MethodNotAllowedException('Card has already been moved to a win pile.');
+        }
+    }
+
+    public function moveToWinPile($game_id, $card_id, $destination) {
+
+    }
+
+
+
     /**
      * @param $unique_id string The public-facing unique ID for the game
      * Check if the game exists from its unique id
