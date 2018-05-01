@@ -22,6 +22,7 @@
             .datatype { color: purple; }
             .subdatatype { color: #480080; }
             .status-code { color: blue; }
+            .literal { color: red; }
             .api-spec {
                 margin: 0;
             }
@@ -89,6 +90,29 @@
             containing each of the piles where the user can move cars to, and each of the piles where the user builds up
             from aces, respectively. <code>top_card</code> is the next card that the user can draw off the deck.
             <code>remaining</code> is the number of cards left in the deck.</p>
+        </div>
+
+        <div class="section">
+            <h1>Moving cards</h1>
+            <p class="api-spec"><b>URL:</b>
+                <code>/game/<span class="function">movetopile</span>/<span class="param">&lt;game_id&gt;</span>/<span class="param">&lt;card_id&gt;</span>/<span class="param">&lt;destination_id&gt;</span></code></p>
+            <p class="api-spec"><b>Parameters:</b> <code class="param">game_id</code>: The ID of the game obtained from
+                <code class="function">newgame</code>. <code class="param">card_id</code>: The ID of the card you want
+                to move. This can be found out from <code class="function">gamestate</code>.
+                <code class="param">destination_type</code>: <code class="literal">1</code> for a pile or
+                <code class="literal">2</code> for a win pile. <code class="param">destination_id</code>: The ID of the
+                particular destination type.</p>
+            <p>Move the card from any applicable location into a pile</p>
+
+            <p class="api-spec"><b>URL:</b>
+                <code>/game/<span class="function">movetowinpile</span>/<span class="param">&lt;game_id&gt;</span>/<span class="param">&lt;card_id&gt;</span>/<span class="param">&lt;destination_id&gt;</span></code></p>
+            <p class="api-spec"><b>Parameters:</b> <code class="param">game_id</code>: The ID of the game obtained from
+                <code class="function">newgame</code>. <code class="param">card_id</code>: The ID of the card you want
+                to move. This can be found out from <code class="function">gamestate</code>.
+                <code class="param">destination_type</code>: <code class="literal">1</code> for a pile or
+                <code class="literal">2</code> for a win pile. <code class="param">destination_id</code>: The ID of the
+                particular destination type.</p>
+            <p>Move the card from any applicable location into a win pile</p>
         </div>
 
         <div class="section">
