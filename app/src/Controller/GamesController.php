@@ -13,6 +13,7 @@ class GamesController extends AppController {
     private $game_card_table;
     private $pile_card_table;
     private $main_deck_card_table;
+    private $win_pile_table;
 
     /*
      * Overwrite the construct method in AppController and also run this one.
@@ -25,6 +26,7 @@ class GamesController extends AppController {
         $this->game_card_table = TableRegistry::get('game_cards');
         $this->pile_card_table = TableRegistry::get('pile_cards');
         $this->main_deck_card_table = TableRegistry::get('main_deck_cards');
+        $this->win_pile_table = TableRegistry::get('win_piles');
 
         $this->LoadComponent('RequestHandler');
     }
@@ -93,30 +95,57 @@ class GamesController extends AppController {
          * 1 = pile
          * 2 = win pile
          */
-        function doMove($source_type, $source_id, $destination_type, $destination_id) {
+        function doMove($source_type, $destination_type, $destination_id, $card_id, $game_id) {
+            //From deck to deck OR from win pile to win pile
             if($source_type === $destination_type && $source_type !== 1) {
                 throw new MethodNotAllowedException('Cannot move card to it\'s current location');
             }
+            //From anywhere to deck
             if($destination_type === 0) {
                 throw new MethodNotAllowedException('Cannot move card back into main deck');
             }
+            //From win pile to anywhere
             if($source_type === 2) {
                 throw new MethodNotAllowedException('Cannot remove card from win pile');
             }
 
             if($source_type === 0) {
-                //delete from main_deck_cards table
+                //Delete card from main deck table
+                foreach($this->main_deck_card_table->find('all')->where(['card_id' => $card_id])->toArray() as $card) {
+                    $card->delete();
+                }
+                //From deck to pile
                 if($destination_type === 1) {
+                    //TODO: Verify that it is a legal move
                     //add card to pile_cards table
-                } else {
+                    $new_pile_card = $this->pile_card_table->newEntity();
+                    $this->pile_card_table->patchEntity($new_pile_card, ['game_id' => $game_id, 'pile_id' => $destination_id, 'card_id' => $card_id]);
+                    $this->pile_card_table->save($new_pile_card);
+                } else { //From deck to win pile
+                    //TODO: Verify that the card is the same suit as ones already in this pile and that it is 1 greater than the last
                     //update highest_card_id in win_piles table
+                    $destination_win_pile = $this->win_pile_table->find('all')->where(['game_id' => $game_id, 'id' => $destination_id])->toArray()[0];
+                    $this->win_pile_table->patchEntity($destination_win_pile, ['highest_card_id' => $card_id]);
+                    $this->win_pile_table->save($destination_win_pile);
                 }
             } else if($source_type === 1) {
-                if($destination_type === 1) {
+                if($destination_type === 1) { //From pile to pile
+                    //TODO: Verify that this is a valid move
                     //update pile_id in pile_cards
-                } else if($destination_type === 2) {
-                    //delete card from pile_cards
-                    //update highest card id in win_piles
+                    $pile_card = $this->pile_card_table->find('all')->where(['card_id' => $card_id]);
+                    $this->pile_card_table->patchEntity($pile_card, ['pile_id' => $destination_id]);
+                    $this->pile_card_table->save();
+                } else if($destination_type === 2) { //From pile to win pile
+                    //TODO: Verify that the card is the same suit as ones already in this pile and that it is 1 greater than the last
+                    //Delete card in pile_cards
+                    foreach($this->pile_card_table->find('all')->where(['card_id' => $card_id])->toArray() as $c) {
+                        $c->delete();
+                    }
+
+                    //update highest_card_id in win_piles table
+                    $destination_win_pile = $this->win_pile_table->find('all')->where(['game_id' => $game_id, 'id' => $destination_id])->toArray()[0];
+                    $this->win_pile_table->patchEntity($destination_win_pile, ['highest_card_id' => $card_id]);
+                    $this->win_pile_table->save($destination_win_pile);
                 }
             }
         }
@@ -151,7 +180,7 @@ class GamesController extends AppController {
                 die();
             }
 
-            //Move the card
+            doMove(, $destination_type, $destination_id, $card_id, $game_id);
         } else if(array_search($card->id, $all_main_deck_card_ids)) {
             //Move the card
         } else {
