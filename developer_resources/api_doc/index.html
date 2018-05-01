@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Server-Side Solitaire (SSS) API</title>
+        <style>
+            html {
+                font-family: Helvetica, Arial, Sans-Serif, Sans;
+            }
+            code {
+                font-size: 1.1em;
+                font-weight: bold;
+            }
+            .section {
+                border-top: 1px solid black;
+                page-break-inside: avoid;
+            }
+            .section h1 {
+                font-size: 1.5em;
+            }
+            .function { color: #ff7b07; }
+            .param { color: green; }
+            .datatype { color: purple; }
+            .subdatatype { color: #480080; }
+            .status-code { color: blue; }
+            .api-spec {
+                margin: 0;
+            }
+            #qr {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 7em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Server-Side Solitaire (SSS) API</h1>
+        <h2>AnthonyD1, STOzaki, 39xdgy, and NotTheRealJoe</h2>
+
+        <img id="qr" src="qr.png" />
+
+        <div class="section">
+            <h1>General information</h1>
+            <p>The Server-Side Solitaire (SSS) API is a RESTful API accessed through standard HTTP GET requests. We use
+            GET requests exclusively; all data passed to the server is formulated as part of the URL.</p>
+            <p>Requests should be passed to <code>/game</code> on the server, followed by the action you wish to
+            perform, followed by any parameters that that action requires.</p>
+        </div>
+
+        <div class="section">
+            <h1>Errors</h1>
+            <p>Whenever a client makes a request, the server will respond with HTTP status
+            <code class="status-code">200</code> if the request is successful, or with an error code if the request is
+            unsuccessful. You will probably most often see <code class="status-code">500</code> errors due to violating
+            game rules. In most cases, errors will return a string describing the error as
+            <code>{<span class="datatype">string</span> error}</code></p>.
+        </div>
+
+        <div class="section">
+            <h1><code>Accept</code> header</h1>
+            <p>The type of content that the server returns depends on the <code>Accept</code> header that the client
+            sends in the request. This should always be <code>application/json</code> in your client application. The
+            one exception to this rule is for debugging; if you are getting an exception on a particular request, you
+            can request the URL with <code>Accept: text/html</code> for a HTML page describing the error.</p>
+        </div>
+
+        <div class="section">
+            <h1>Creating a new game</h1>
+            <p class="api-spec"><b>URL:</b> <code>/game/<span class="function">newgame</span></code></p>
+            <p class="api-spec"><b>Parameters:</b> None</p>
+            <p class="api-spec"><b>Returns:</b> <code>{<span class="datatype">string</span> game_id}</code> The ID of
+            the game that was created.</p>
+            <p>Before any actions in a game can be performed, a game must be created with the server. This URL can be
+            called with no parameters to create a new game. It returns a UUID for the game that the client must store,
+            and provide to the server when making subsequent requests.</p>
+        </div>
+
+        <div class="section">
+            <h1>Getting information about the game</h1>
+            <p class="api-spec"><b>URL:</b>
+                <code>/game/<span class="function">gamestate</span>/<span class="param">&lt;game_id&gt;</span></code></p>
+            <p class="api-spec"><b>Parameters:</b> <code class="param">game_id</code> The unique identifier for this
+            game obtained from <code class="function">newgame</code>.</p>
+            <p class="api-spec"><b>Returns:</b> <code>{<span class="datatype">array(<span class="subdatatype">array(card</span>)</span> piles,
+                <span class="datatype">array(<span class="subdatatype">array(card)</span>)</span> win_piles,
+                <span class="datatype">card</span> top_card,
+                <span class="datatype">int</span> remaining}</code></p>
+            <p>Describe the current status of the game board. <code>piles</code> and <code>win_piles</code> are arrays
+            containing each of the piles where the user can move cars to, and each of the piles where the user builds up
+            from aces, respectively. <code>top_card</code> is the next card that the user can draw off the deck.
+            <code>remaining</code> is the number of cards left in the deck.</p>
+        </div>
+
+        <div class="section">
+            <h1>Terminating a game</h1>
+            <p class="api-spec"><b>URL:</b>
+                <code>/game/<span class="function">destroygame</span>/<span class="param">&lt;game_id&gt;</span></code></p>
+            <p class="api-spec"><b>Parameters:</b> <code class="param">game_id</code> The unique identifier for this
+                game obtained from <code class="function">newgame</code>.</p>
+            <p class="api-spec"><b>Returns:</b> <code>{<span class="datatype">boolean</span> success}</code>
+                <code>true</code> if the game is deleted successfully, <code>false</code> if it is not. No normal
+                conditions would prevent a game from being deleted.
+            <p>Immediately deletes the game. The user will lose any progress.</p>
+        </div>
+
+    </body>
+</html>
